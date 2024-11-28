@@ -1,0 +1,7 @@
+4. Matrix-Matrix Multiplication (GEMM)
+
+    Purpose: Key operation in transformer layers for attention mechanisms and MLP layers.
+    Description: Multiply two dense matrices (e.g., attention weights and values).
+    Kernel Implementation Focus:
+        Leverage GPU libraries (e.g., cuBLAS, TensorRT) for optimal performance.
+        Optimize communication for input/output matrices distributed across devices.

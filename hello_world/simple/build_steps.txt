@@ -1,0 +1,24 @@
+# convert to llvm ir 
+clang -S -emit-llvm -O0 -Xclang -disable-llvm-passes example.cpp -o temp.ll
+
+# convert llvm ir to mlir
+mlir-translate -import-llvm temp.ll -o temp.mlir
+
+# use cgeist to convert to mlir (need to install clang package)
+cgeist example.cpp -function=* -S > temp.mlir
+
+# convert mlir to llvm ir
+mlir-opt temp.mlir -convert-to-llvm > temp_llvm_dialect.ll
+mlir-translate temp_llvm_dialect.ll -mlir-to-llvmir > temp_llvm.ll
+
+# create executable
+llc temp_llvm.ll -o temp.s
+clang temp.s -o manual_example
+
+
+
+
+
+
+
+cgeist main.cpp -O0 -S -o main.affine.mlir -I/usr/include/x86_64-linux-gnu -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/include/linux/
