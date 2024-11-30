@@ -5,6 +5,8 @@ clang++ $1.cu -S -x cuda -I/usr/include/c++/11/ -I/usr/include/x86_64-linux-gnu/
 # Step 2: Convert LLVM BC to LLVM IR
 llvm-dis $1-cuda-nvptx64-nvidia-cuda-sm_89.bc -o $1.ll
 
+sed -i 's/optnone//g' $1.ll
+
 # Step 3: Convert LLVM IR to PTX Assembly
 llc -march=nvptx64 -mcpu=sm_89  $1.ll -o $1.ptx
 
