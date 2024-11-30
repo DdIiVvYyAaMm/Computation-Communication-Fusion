@@ -1,1 +1,2 @@
 test/
+.ptx .cubin .ll .bc
