@@ -3,13 +3,12 @@ import pycuda.autoinit
 import numpy as np
 import timeit
 
-def time_kernel(kernel, A_device, B_device, C_device, M, N, K, block_size, grid_size)
+def time_kernel(kernel, A_device, B_device, C_device, M, N, K, block_size, grid_size):
     kernel(A_device, B_device, C_device, np.int32(M), np.int32(N), np.int32(K),
            block=block_size, grid=grid_size)
 
 # Load the compiled CUBIN file
-# module = cuda.module_from_file("basic_gemm.cubin")
-module = cuda.module_from_file("basic_gemm_from_ll.cubin")
+module = cuda.module_from_file("basic_gemm.cubin")
 
 # Get the kernel function
 kernel = module.get_function("_Z15matrixMulKernelPKfS0_Pfiii")

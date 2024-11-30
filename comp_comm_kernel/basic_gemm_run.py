@@ -3,7 +3,6 @@ import pycuda.autoinit
 import numpy as np
 
 # Load the compiled CUBIN file
-# module = cuda.module_from_file("basic_gemm.cubin")
 module = cuda.module_from_file("basic_gemm.cubin")
 
 # Get the kernel function
