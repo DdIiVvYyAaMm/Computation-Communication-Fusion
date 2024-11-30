@@ -1,0 +1,18 @@
+Running loop tiling on function: _ZN25__cuda_builtin_blockIdx_t17__fetch_builtin_yEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.ctaid.y()
+  ret i32 %0
+Running loop tiling on function: _ZN25__cuda_builtin_blockDim_t17__fetch_builtin_yEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.ntid.y()
+  ret i32 %0
+Running loop tiling on function: _ZN26__cuda_builtin_threadIdx_t17__fetch_builtin_yEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.tid.y()
+  ret i32 %0
+Running loop tiling on function: _ZN25__cuda_builtin_blockIdx_t17__fetch_builtin_xEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.ctaid.x()
+  ret i32 %0
+Running loop tiling on function: _ZN25__cuda_builtin_blockDim_t17__fetch_builtin_xEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.ntid.x()
+  ret i32 %0
+Running loop tiling on function: _ZN26__cuda_builtin_threadIdx_t17__fetch_builtin_xEv
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.tid.x()
+  ret i32 %0
