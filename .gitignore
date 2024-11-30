@@ -1,2 +1,5 @@
 test/
-.ptx .cubin .ll .bc
+*.ptx
+*.cubin
+*.ll
+*.bc

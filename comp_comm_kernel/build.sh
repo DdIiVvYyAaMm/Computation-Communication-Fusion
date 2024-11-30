@@ -1,9 +1,10 @@
+ARCH=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
 # Step 1: Compile CUDA source file to LLVM IR
 clang++ $1.cu -S -x cuda -I/usr/include/c++/11/ -I/usr/include/x86_64-linux-gnu/c++/11/ \
-        -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_89 
+        -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_$ARCH 
 
 # Step 2: Convert LLVM BC to LLVM IR
-llvm-dis $1-cuda-nvptx64-nvidia-cuda-sm_89.bc -o $1.ll
+llvm-dis $1-cuda-nvptx64-nvidia-cuda-sm_${ARCH}.bc -o $1.ll
 
 sed -i 's/optnone//g' $1.ll
 

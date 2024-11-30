@@ -4,7 +4,7 @@ import numpy as np
 
 # Load the compiled CUBIN file
 # module = cuda.module_from_file("optimized_gemm.cubin")
-module = cuda.module_from_file("optimized_gemm_from_ll.cubin")
+module = cuda.module_from_file("optimized_gemm.cubin")
 
 # Get the kernel function
 kernel = module.get_function("_Z20tiledMatrixMulKernelPKfS0_Pfiii")
