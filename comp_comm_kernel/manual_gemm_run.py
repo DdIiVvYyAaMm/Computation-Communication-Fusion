@@ -1,17 +1,12 @@
 import pycuda.driver as cuda
 import pycuda.autoinit
 import numpy as np
-import timeit
-
-def time_kernel(kernel, A_device, B_device, C_device, M, N, K, block_size, grid_size):
-    kernel(A_device, B_device, C_device, np.int32(M), np.int32(N), np.int32(K),
-           block=block_size, grid=grid_size)
 
 # Load the compiled CUBIN file
-module = cuda.module_from_file("optimized_gemm.cubin")
+module = cuda.module_from_file("basic_gemm.cubin")
 
 # Get the kernel function
-kernel = module.get_function("_Z20tiledMatrixMulKernelPKfS0_Pfiii")
+kernel = module.get_function("_Z15matrixMulKernelPKfS0_Pfiii")
 
 # Matrix dimensions
 M, N, K = 512, 512, 512  # Rows and columns for matrices
@@ -36,10 +31,8 @@ cuda.memcpy_htod(A_device, A_host)
 cuda.memcpy_htod(B_device, B_host)
 
 # Launch the kernel
-execution_time = timeit.timeit(lambda: time_kernel(kernel, A_device, B_device, C_device, M, N, K, block_size, grid_size), number=10000)
-average_time_microseconds = (execution_time / 10000) * 1_000_000
-
-print(f"Average execution time: {average_time_microseconds:.5f} microseconds")
+kernel(A_device, B_device, C_device, np.int32(M), np.int32(N), np.int32(K),
+       block=block_size, grid=grid_size)
 
 # Copy the result matrix back to the host
 cuda.memcpy_dtoh(C_host, C_device)

@@ -8,10 +8,10 @@ def time_kernel(kernel, A_device, B_device, C_device, M, N, K, block_size, grid_
            block=block_size, grid=grid_size)
 
 # Load the compiled CUBIN file
-module = cuda.module_from_file("optimized_gemm.cubin")
+module = cuda.module_from_file("manual_gemm.cubin")
 
 # Get the kernel function
-kernel = module.get_function("_Z20tiledMatrixMulKernelPKfS0_Pfiii")
+kernel = module.get_function("_Z15matrixMulKernelPKfS0_Pfiii")
 
 # Matrix dimensions
 M, N, K = 512, 512, 512  # Rows and columns for matrices
