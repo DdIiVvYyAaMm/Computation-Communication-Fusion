@@ -1,0 +1,1 @@
+add_llvm_pass_plugin(LoopTilingPass looptilingpass.cpp loop_tiler_final.cpp)

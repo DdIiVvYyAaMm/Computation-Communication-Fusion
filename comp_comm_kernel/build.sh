@@ -8,6 +8,13 @@ llvm-dis $1-cuda-nvptx64-nvidia-cuda-sm_${ARCH}.bc -o $1.ll
 
 sed -i 's/optnone//g' $1.ll
 
+mkdir build
+cd build
+cmake ..
+make
+cd ..
+opt -load-pass-plugin=./build/LoopTilingPass/LoopTilingPass.dylib -passes="LoopTilingPass" $1.ll -o $1.ll
+
 # Step 3: Convert LLVM IR to PTX Assembly
 llc -march=nvptx64 -mcpu=sm_${ARCH}  $1.ll -o $1.ptx
 
