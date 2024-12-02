@@ -17,7 +17,8 @@ def run_test(cuda_binary, kernel_name, M, N, K, tile_size):
         print(cuda_binary + " failed correctness check for matrix sizes=" + str(M) + ", " + str(N) + ", " + str(K))
 
 
-cuda_binaries = ["basic_gemm.cubin", "optimized_gemm.cubin"]
+# validate manual build process and our optimization pass
+cuda_binaries = ["original_gemm.cubin", "optimized_gemm.cubin"]
 kernel_names = ["_Z15matrixMulKernelPKfS0_Pfiii", "_Z15matrixMulKernelPKfS0_Pfiii"]
 
 sizes = list(range(512, 2049, 254))
