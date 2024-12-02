@@ -20,24 +20,22 @@ compile_cu_to_ll()
 compile_ll_to_cubin() 
 {
     local input=$1
-    local output=$2
 
-    echo "compiling ${input}.ll to ${output}.cubin"
+    echo "compiling ${input}.ll to ${input}_gemm.cubin"
 
     # convert optimized llvm ir to ptx assembly
-    llc -march=nvptx64 -mcpu=sm_${ARCH} "$input.ll" -o "$input.ptx"
+    llc -march=nvptx64 -mcpu=sm_${ARCH} ${input}.ll -o ${input}.ptx
 
     # check if the ptx file is well formed (i.e. this should not have any output)
-    echo "Checking for errors in $input.ptx..."
-    ptxas -arch=sm_${ARCH} -o /dev/null "$input.ptx"
+    echo "Checking for errors in ${input}.ptx..."
+    ptxas -arch=sm_${ARCH} -o /dev/null ${input}.ptx
 
     # convert the ptx file to a cuda binary (cubin)
-    nvcc -arch=sm_${ARCH} -cubin -o "${output}_gemm.cubin" "$input.ptx"
+    nvcc -arch=sm_${ARCH} -cubin -o ${input}_gemm.cubin ${input}.ptx
 }
 
 # detect nvidia gpu architecture (i.e. compute capability)
-ARCH=89
-#$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
+ARCH=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
 
 compile_cu_to_ll "gemm"
 compile_cu_to_ll "optimized"
