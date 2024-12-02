@@ -11,8 +11,16 @@ llvm-dis $1-cuda-nvptx64-nvidia-cuda-sm_${ARCH}.bc -o $1.ll
 # get rid of optnone flags in the file to make cuda kernel ir accessible to our llvm optimization pass
 sed -i 's/optnone//g' $1.ll
 
+# determine correct file extension for OS
+PASS_ROOT_FOLDER=./../LoopTilingPass
+OS=$(uname)
+PASS_EXTENSION=dylib
+if [[ "$OS" == "Linux" ]]; then
+    PASS_EXTENSION=so
+fi
+
 # run our llvm loop tiling optimization pass on the cuda kernel
-opt -load-pass-plugin=./build/LoopTilingPass/LoopTilingPass.dylib -passes="LoopTilingPass" $1.ll -o $1.ll
+opt -load-pass-plugin=${PASS_ROOT_FOLDER}/build/LoopTilingPass.${PASS_EXTENSION} -passes="LoopTilingPass" $1.ll -o $1.ll
 
 # convert optimized llvm ir to ptx assembly
 llc -march=nvptx64 -mcpu=sm_${ARCH}  $1.ll -o $1.ptx
