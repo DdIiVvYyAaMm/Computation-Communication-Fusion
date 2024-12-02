@@ -1,5 +1,22 @@
 #!/bin/bash
 
+compile_cu_to_ll()
+{   
+    local input=$1
+
+    echo "compiling ${input}.cu to ${input}.ll"
+
+    # convert cuda kernel to llvm byte code representation
+    clang++ ${input}.cu -S -x cuda -I/usr/include/c++/11/ -I/usr/include/x86_64-linux-gnu/c++/11/ \
+            -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_$ARCH 
+    
+    # convert llvm byte code to human readable ir representation
+    llvm-dis ${input}-cuda-nvptx64-nvidia-cuda-sm_${ARCH}.bc -o ${input}.ll
+    
+    # get rid of optnone flags in the file to make cuda kernel ir accessible to our llvm optimization pass
+    sed -i 's/optnone//g' ${input}.ll
+}
+
 compile_ll_to_cubin() 
 {
     local input=$1
@@ -19,17 +36,13 @@ compile_ll_to_cubin()
 }
 
 # detect nvidia gpu architecture (i.e. compute capability)
-ARCH=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
+ARCH=89
+#$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
 
-# convert cuda kernel to llvm byte code representation
-clang++ gemm.cu -S -x cuda -I/usr/include/c++/11/ -I/usr/include/x86_64-linux-gnu/c++/11/ \
-        -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_$ARCH 
+compile_cu_to_ll "gemm"
+compile_cu_to_ll "optimized"
 
-# convert llvm byte code to human readable ir representation
-llvm-dis gemm-cuda-nvptx64-nvidia-cuda-sm_${ARCH}.bc -o gemm.ll
-
-# get rid of optnone flags in the file to make cuda kernel ir accessible to our llvm optimization pass
-sed -i 's/optnone//g' gemm.ll
+mv optimized.ll manually_optimized.ll
 
 # determine correct file extension for OS
 PASS_ROOT_FOLDER=./../LoopTilingPass
@@ -47,3 +60,4 @@ mv gemm.ll original.ll
 # compile both original and optimized llvm ir to cubin files
 compile_ll_to_cubin "original"
 compile_ll_to_cubin "optimized"
+compile_ll_to_cubin "manually_optimized"
