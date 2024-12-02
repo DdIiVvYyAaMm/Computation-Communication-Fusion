@@ -1,7 +1,7 @@
 from CoreMatrixMult import CoreMatrixMult
 import time
 
-cuda_binaries = ["original_gemm.cubin", "optimized_gemm.cubin", "manually_optimized_gemm.cubin"]
+cuda_binaries = ["../original_gemm.cubin", "../optimized_gemm.cubin", "../manually_optimized_gemm.cubin"]
 kernel_names = ["_Z15matrixMulKernelPKfS0_Pfiii", "_Z15matrixMulKernelPKfS0_Pfiii", "_Z20tiledMatrixMulKernelPKfS0_Pfiii"]
 
 sizes = list(range(512, 2049, 254))
