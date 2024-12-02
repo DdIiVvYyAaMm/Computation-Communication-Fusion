@@ -19,7 +19,7 @@ llc -march=nvptx64 -mcpu=sm_${ARCH}  $1.ll -o $1.ptx
 
 # check if the ptx file is well formed (i.e. this should not have any output)
 echo "Checking for errors in PTX file..."
-ptxas -arch=sm_89 -o /dev/null $1.ptx
+ptxas -arch=sm_${ARCH} -o /dev/null $1.ptx
 
 # convert the ptx file to a cuda binary (cubin)
-nvcc -arch=sm_89 -cubin -o $1_gemm.cubin $1.ptx
+nvcc -arch=sm_${ARCH} -cubin -o $1_gemm.cubin $1.ptx
