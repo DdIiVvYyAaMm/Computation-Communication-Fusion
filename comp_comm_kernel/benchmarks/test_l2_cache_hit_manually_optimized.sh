@@ -1,1 +1,1 @@
-ncu --verbose --kernel-name tiledMatrixMulKernel python manually_optimized_cache_profiler.py
+ncu --verbose --set full --kernel-name tiledMatrixMulKernel python manually_optimized_cache_profiler.py &> manually_optimized_metrics.txt

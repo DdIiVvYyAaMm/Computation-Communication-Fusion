@@ -6,8 +6,8 @@ kernel_names = ["_Z20tiledMatrixMulKernelPKfS0_Pfiii"]
 
 sizes = list(range(512, 2049, 254))
 
-repititions = 100000
-# repititions = 1
+# repititions = 100000
+repititions = 10
 
 
 timing = [[] for _ in range(3)]

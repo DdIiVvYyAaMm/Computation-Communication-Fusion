@@ -1,1 +1,1 @@
-ncu --verbose --kernel-name matrixMulKernel python original_cache_profiler.py
+ncu --verbose --set full --kernel-name matrixMulKernel python original_cache_profiler.py &> original_metrics.txt
