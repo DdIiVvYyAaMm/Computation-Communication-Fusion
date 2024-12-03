@@ -1,0 +1,1 @@
+nv-nsight-cu-cli --metrics l2_tex_read_hit_rate --kernel-name _Z15matrixMulKernelPKfS0_Pfiii python original_cache_profiler.py
