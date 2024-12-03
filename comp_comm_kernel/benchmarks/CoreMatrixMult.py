@@ -25,9 +25,9 @@ class CoreMatrixMult:
         self.free_device_memory()
 
     def init_matrices_with_random_nums(self):
-        self.A_host = np.random.rand(M, K).astype(np.float32)
-        self.B_host = np.random.rand(K, N).astype(np.float32)
-        self.C_host = np.zeros((M, N), dtype=np.float32)
+        self.A_host = np.random.rand(self.M, self.K).astype(np.float32)
+        self.B_host = np.random.rand(self.K, self.N).astype(np.float32)
+        self.C_host = np.zeros((self.M, self.N), dtype=np.float32)
 
     def allocate_device_memory(self):
         self.A_device = cuda.mem_alloc(self.A_host.nbytes)

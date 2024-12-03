@@ -1,8 +1,8 @@
 from CoreMatrixMult import CoreMatrixMult
 import time
 
-cuda_binaries = ["../original_gemm.cubin"]
-kernel_names = ["_Z15matrixMulKernelPKfS0_Pfiii"]
+cuda_binaries = ["../manually_optimized_gemm.cubin"]
+kernel_names = ["_Z20tiledMatrixMulKernelPKfS0_Pfiii"]
 
 sizes = list(range(512, 2049, 254))
 
@@ -17,9 +17,7 @@ for i in range(len(cuda_binaries)):
 
     for size in sizes:
         total_time = 0.0
-        print(size)
-        for j in range(repititions):
-
+        for _ in range(repititions):
             multiplier = CoreMatrixMult(cuda_binaries[i], kernel_names[i], size, size, size, 16)
     
             multiplier.init_matrices_with_random_nums()

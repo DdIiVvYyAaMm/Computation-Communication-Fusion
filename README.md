@@ -8,7 +8,7 @@ All instructions assume that you are starting at the root directory
 
 ## Build cubins
 `cd comp_comm_kernel`  
-`./buil.sh`  
+`./build.sh`  
 
 # Test
 Go back to root directory  

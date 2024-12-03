@@ -3,3 +3,5 @@ test/
 *.cubin
 *.ll
 *.bc
+build/
+__pycache__/

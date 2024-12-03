@@ -10,13 +10,15 @@ repititions = 10000
 
 timing = [[] for _ in range(3)]
 
+print(sizes)
+
 for i in range(len(cuda_binaries)):
     print("running performance tests for " + cuda_binaries[i])
-
     for size in sizes:
+        print(size)
         total_time = 0.0
-        for i in range(repititions):
-            multiplier = CoreMatrixMult(cuda_binaries[i], kernel_name[i], size, size, size, 16)
+        for j in range(repititions):
+            multiplier = CoreMatrixMult(cuda_binaries[i], kernel_names[i], size, size, size, 16)
     
             multiplier.init_matrices_with_random_nums()
             multiplier.allocate_device_memory()

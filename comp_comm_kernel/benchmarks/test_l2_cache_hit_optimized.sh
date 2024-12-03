@@ -1,1 +1,1 @@
-nv-nsight-cu-cli --metrics l2_tex_read_hit_rate --kernel-name _Z15matrixMulKernelPKfS0_Pfiii python optimized_cache_profiler.py
+ncu --verbose --kernel-name matrixMulKernel python optimized_cache_profiler.py
