@@ -1,0 +1,15 @@
+Averaged Results
+
+Section: Memory Workload Analysis
+--------------------------- ----------- ------------
+Metric Name                 Metric Unit Metric Value
+--------------------------- ----------- ------------
+Memory Throughput               Gbyte/s       524.74
+Mem Busy                              %        49.73
+Max Bandwidth                                  90.24
+L1/TEX Hit Rate                       %        17.77
+L2 Compression Success Rate           %         0.00
+L2 Compression                                  0.00
+L2 Hit Rate                           %        98.25
+Mem Pipes Busy                        %        90.24
+--------------------------- ----------- ------------
