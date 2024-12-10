@@ -70,6 +70,9 @@ Verify install
 nvcc -V
 ```
 
+# Install Triton
+Navigate to the triton folder and follow build instructions in README located in the folder.
+
 ## Build loop tiling pass
 `cd LoopTilingPass`   
 `mkdir build && cd build`  
