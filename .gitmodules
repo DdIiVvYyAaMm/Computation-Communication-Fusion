@@ -1,0 +1,3 @@
+[submodule "triton"]
+	path = triton
+	url = https://github.com/Harsh-Sinha/triton-kernel-fusion.git
