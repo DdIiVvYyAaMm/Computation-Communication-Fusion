@@ -15,10 +15,11 @@ sudo apt update
 sudo apt upgrade
 sudo apt install -y build-essential
 ```
-Additionally, install python and cmake
+Additionally, other dependencies
 ```sh
 sudo apt install -y cmake
 sudo apt install -y python3
+sudo apt install -y torch
 ```
 
 ## Installing CUDA Library
@@ -84,7 +85,7 @@ nvcc -V
 ## Install Triton
 Navigate to the triton folder and follow build instructions in README located in the folder.
 
-# Build our Solution
+# Dependencies for our solution
 Please build in this order to make sure no dependencies are missing.
 ## Build loop tiling pass
 This will build the loop tiling shared object file that we link to in our compilation steps.
@@ -95,6 +96,35 @@ cd build
 cmake ..  
 make
 ```
+## Install python dependencies
+```sh
+pip install pycuda numpy argparse
+```
+
+# Our subfolders
+<b>IMPORTANT:</b> If the for any reason the run or benchmark python files do not work than it is most likely because we are referencing the incorrect kernel name to launch the cubin. This occurs because CPP compilation will mangle the kernel name while it compiling. You will have to do the following:  
+  
+Look at the associated .ptx file and locate the kernel's mangled name  
+
+Locate the string that represents what kernel name we are trying to use (it will either be in the module.get_function or in a array at the top of the file)  
+
+Replace the string with the new mangled kernel name
+
+## basic_cuda
+This folder contains our hello world cuda file where we initialize a kernel and launch multiple threads and print the thread id from each thread. This was used to invalidate our approach of cgeist/polygeist to drop a cuda kernel to MLIR representation. We then shifted to using this as a scratchpad to figure out how to convert a cuda kernel into a cuda binary that we could use a python file to launch.
+### Building
+You can generate a cuda binary by running the following
+```sh
+./build.sh
+```
+
+### Running
+Call `run.py` 
+
+## comp_comm_kernel
+
+## hello_world
+This folder contains a cpp file that print hello world by calling a function. It was used to validate that a cpp file could be manually compiled to an executable whilst generating every intermediate representation. This folder is included but not part of our solution.
 
 ## Build cubins
 `cd comp_comm_kernel`  
