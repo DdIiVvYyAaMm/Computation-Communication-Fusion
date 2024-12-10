@@ -10,9 +10,9 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 ```
 
-# Installing CUDA Library
+## Installing CUDA Library
 We have to first properly install all the correct versions of dependencies.
-## Update Kernel Version
+### Update Kernel Version
 Install the kernel  
 ```sh
 sudo apt update
@@ -30,7 +30,7 @@ Once your system has finished rebooting, verify that the kernel was installed pr
 ```sh
 uname -r
 ```
-## Install GCC 12.3
+### Install GCC 12.3
 Install and set your default gcc to 12.3
 ```sh
 sudo apt install -y gcc-12 g++-12
@@ -40,15 +40,15 @@ Verify that it is correctly setup
 ```sh
 gcc --version
 ```
-## Install glibc 2.35
+### Install glibc 2.35
 install and verify
 ```sh
 sudo apt upgrade libc6
 ldd --version
 ```
-## Install CUDA Driver
+### Install CUDA Driver
 Follow steps 1-5 on this article: https://www.cherryservers.com/blog/install-cuda-ubuntu
-## Install CUDA
+### Install CUDA
 ```sh
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
@@ -70,7 +70,7 @@ Verify install
 nvcc -V
 ```
 
-# Install Triton
+## Install Triton
 Navigate to the triton folder and follow build instructions in README located in the folder.
 
 ## Build loop tiling pass
