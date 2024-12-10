@@ -9,6 +9,17 @@ sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
 ```
+Make sure you have performed the standard ubuntu init sequence:
+```sh
+sudo apt update
+sudo apt upgrade
+sudo apt install -y build-essential
+```
+Additionally, install python and cmake
+```sh
+sudo apt install -y cmake
+sudo apt install -y python3
+```
 
 ## Installing CUDA Library
 We have to first properly install all the correct versions of dependencies.
