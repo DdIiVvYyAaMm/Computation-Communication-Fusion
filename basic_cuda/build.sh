@@ -1,13 +1,16 @@
-# Step 1: Compile CUDA source file to LLVM IR
+# detect nvidia gpu architecture (i.e. compute capability)
+ARCH=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
+
+# convert cuda kernel to llvm byte code representation
 clang++ main.cu -S -x cuda -I/usr/include/c++/11/ -I/usr/include/x86_64-linux-gnu/c++/11/ \
-        -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_89 
+        -emit-llvm -O0 -Xclang -disable-llvm-passes --cuda-gpu-arch=sm_$ARCH 
 
-# Step 2: Convert LLVM IR to PTX Assembly
-llc -march=nvptx64 -mcpu=sm_89  main-cuda-nvptx64-nvidia-cuda-sm_89.bc -o main.ptx
+# convert llvm byte code to human readable ir representation
+llc -march=nvptx64 -mcpu=sm_$ARCH main-cuda-nvptx64-nvidia-cuda-sm_$ARCH.bc -o main.ptx
 
-# Step 3: Check the PTX file for errors
+# check if the ptx file is well formed (i.e. this should not have any output)
 echo "Checking for errors in PTX file..."
-ptxas -arch=sm_89 -o /dev/null main.ptx
+ptxas -arch=sm_$ARCH -o /dev/null main.ptx
 
-# Step 4: Generate CUBIN from PTX
-nvcc -arch=sm_89 -cubin -o kernel.cubin main.ptx
+# convert the ptx file to a cuda binary (cubin)
+nvcc -arch=sm_$ARCH -cubin -o kernel.cubin main.ptx
