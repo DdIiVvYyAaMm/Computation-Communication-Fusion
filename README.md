@@ -122,6 +122,14 @@ You can generate a cuda binary by running the following
 Call `run.py` 
 
 ## comp_comm_kernel
+This folder contains two cuda files: gemm.cu and optimized.cu. The first is a simple gemm kernel implementation that we use as a baseline. The optimized.cu is a manually optimized tiled base matrix multiplication. Additionally, this folder has a build.sh and clean.sh bash scripts that are self explanatory. The build script will generate 3 cuda binaries:  
+- original.cu: this is a manually compiled cuda binary of gemm.cu without our llvm optimization pass applied to it
+- optimized.cu: this is a manually compiled cuda binary of gemm.cu with our Loop Tiling LLVM pass applied to it
+- manually_optimized.cu: this is a manually compiled cuda binary of optimized.cu without our llvm pass applied to it
+
+You can build the cuda binaries by calling `./build.sh`  
+  
+Once you have built the cuda binaries you can run them using the associated *_gemm_run.py. This file will generate a random matrix of size 512x512, run the kernel on your gpu, and validate that the result computed is valid.  
 
 ## hello_world
 This folder contains a cpp file that print hello world by calling a function. It was used to validate that a cpp file could be manually compiled to an executable whilst generating every intermediate representation. This folder is included but not part of our solution.
