@@ -84,11 +84,17 @@ nvcc -V
 ## Install Triton
 Navigate to the triton folder and follow build instructions in README located in the folder.
 
+# Build our Solution
+Please build in this order to make sure no dependencies are missing.
 ## Build loop tiling pass
-`cd LoopTilingPass`   
-`mkdir build && cd build`  
-`cmake ..`  
-`make`
+This will build the loop tiling shared object file that we link to in our compilation steps.
+```sh
+cd LoopTilingPass   
+mkdir build
+cd build  
+cmake ..  
+make
+```
 
 ## Build cubins
 `cd comp_comm_kernel`  
