@@ -101,6 +101,63 @@ make
 pip install pycuda numpy argparse
 ```
 
+## Install and Build Polygeist
+As mentioned on top, make sure you have free memory (40 GB) otherwise increase using swap space.
+
+Make sure you have ninja, otherwise install it.
+```sh
+sudo apt install -y ninja-build
+```
+Cloning the Polygeist Repo now.
+```sh
+git clone --recursive https://github.com/llvm/Polygeist
+```
+Go to the Polygeist Directory and make a build directory.
+```sh
+cd Polygeist
+mkdir build
+cd build
+```
+Run the CMake.
+
+```sh
+cmake -G Ninja ../llvm-project/llvm   -DLLVM_ENABLE_PROJECTS="clang;mlir" 
+-DCMAKE_C_COMPILER=$(which clang) 
+-DCMAKE_CXX_COMPILER=$(which clang++)
+ -DLLVM_EXTERNAL_PROJECTS="polygeist"   -DLLVM_EXTERNAL_POLYGEIST_SOURCE_DIR=..   -DLLVM_TARGETS_TO_BUILD="host;X86;NVPTX"   -DLLVM_ENABLE_ASSERTIONS=ON   -DLLVM_USE_LINKER=lld   -DPOLYGEIST_USE_LINKER=lld   -DPOLYGEIST_ENABLE_CUDA=1   -DCMAKE_BUILD_TYPE=Release
+
+```
+If there are any errors at the CMake step, then clear the build.
+Go outside the build directory and delete it.
+```sh
+cd ..
+rm -rf build
+```
+Install LLD
+
+```sh
+sudo apt install lld
+```
+Add this line in the CMakeLists.txt
+```sh
+set(CLANG_TOOL "/usr/bin/clang")
+```
+Now let's again  make build and cd into it.
+```sh
+mkdir build
+cd build
+```
+Run the ninja command
+```sh
+ninja
+```
+To check the builds
+```sh
+ninja check-polygeist-opt && ninja check-cgeist
+```
+If the check tests are all successful, then Your Polygeist build is successful.
+
+
 # Our subfolders
 <b>IMPORTANT:</b> If the for any reason the run or benchmark python files do not work than it is most likely because we are referencing the incorrect kernel name to launch the cubin. This occurs because CPP compilation will mangle the kernel name while it compiling. You will have to do the following:  
   
