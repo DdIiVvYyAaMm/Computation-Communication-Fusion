@@ -150,6 +150,14 @@ This test will time each solution (original, optimized, manually optimized) agai
 # Usage
 python test_performance.py
 ```
+#### test_l2_cache_hit_SOLUTION.sh + SOLUTION_cache_profiler.py
+These tests make use of Nvidia Nsight Compute to profile the GPU as the kernel is running. Despite the name being related to caches, these scripts will generate profile data for all pre-defined sets (defined here: https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html). The bash file is used to make the correct call to Nsight Compute to start profiling all this data. The *_cache_profiler.py is used to run kernels with different matrix sizes multiple times. This allows us to understand how the kernel is performing accross varying workloads. You will need to have Nvidia Nsight Compute installed to run these benchmarks.
+```sh
+# Usage
+./test_l2_cache_hit_SOLUTION.sh
+# e.g. ./test_l2_cache_hit_original.sh
+```
+
 
 ## hello_world
 This folder contains a cpp file that print hello world by calling a function. It was used to validate that a cpp file could be manually compiled to an executable whilst generating every intermediate representation. This folder is included but not part of our solution.
