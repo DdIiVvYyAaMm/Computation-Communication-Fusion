@@ -130,6 +130,26 @@ This folder contains two cuda files: gemm.cu and optimized.cu. The first is a si
 You can build the cuda binaries by calling `./build.sh`  
   
 Once you have built the cuda binaries you can run them using the associated *_gemm_run.py. This file will generate a random matrix of size 512x512, run the kernel on your gpu, and validate that the result computed is valid.  
+### Benchmarks
+This folder contains all of our python scripts and bash files we used to test and benchmark our solution. The following subsections talk about each test type and what they do
+#### test_simple
+This tests that our CoreMatMult class works as expected on the original solution cuda binary. This class is the foundation upon which the rest of the benchmarks are ran on.
+```sh
+# Usage
+python test_simple.py
+```
+#### test_correctness
+This test will check each of the solutions (original, optimized, manually optimized) against a sequence of random square matrices that have sizes starting with 512x512 and go up to 2036x2036 in increments of 254. Each solution is tested against their own random sequence of matrices. For each of computed results it will perform a check to verify that the correct output was generated. This was used to verify that our Loop Tiling Optimization pass did not produce incorrect results and that our manual compilation process was not flawed. This was the starting point before we ran any of the other tests (we won't explicitly check for correctness in other tests).
+```sh
+# Usage
+python test_correctness.py
+```
+#### test_performance
+This test will time each solution (original, optimized, manually optimized) against every matrix size starting with 512x512 and go up to 2036x2036 in increments of 254. For each size, on each solution, it will run 10,000 iterations and average the total execution time. Furthermore, on each iteration it will randomize the matrices to ensure we are not receiving any cached results.
+```sh
+# Usage
+python test_performance.py
+```
 
 ## hello_world
 This folder contains a cpp file that print hello world by calling a function. It was used to validate that a cpp file could be manually compiled to an executable whilst generating every intermediate representation. This folder is included but not part of our solution.
