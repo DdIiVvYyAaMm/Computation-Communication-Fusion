@@ -102,30 +102,40 @@ pip install pycuda numpy argparse
 ```
 
 ## Install and Build Polygeist
-As mentioned on top, make sure you have free memory (40 GB) otherwise increase using swap space.
+As mentioned on top, make sure you have free memory (40 GB) otherwise increase using swap space. You are required to build this for our solution to work.
 
 Make sure you have ninja, otherwise install it.
 ```sh
 sudo apt install -y ninja-build
 ```
-Cloning the Polygeist Repo now.
+Install LLD
 ```sh
-git clone --recursive https://github.com/llvm/Polygeist
+sudo apt install -y lld
 ```
-Go to the Polygeist Directory and make a build directory.
+Polygeist is included as a submodule in our git repo. Navigate to the directory, and follow our build instructions below to get it working for our tool.
 ```sh
-cd Polygeist
+cd polygeist
+```
+Make a build directory.
+```sh
 mkdir build
 cd build
 ```
 Run the CMake.
 
 ```sh
-cmake -G Ninja ../llvm-project/llvm   -DLLVM_ENABLE_PROJECTS="clang;mlir" 
--DCMAKE_C_COMPILER=$(which clang) 
--DCMAKE_CXX_COMPILER=$(which clang++)
- -DLLVM_EXTERNAL_PROJECTS="polygeist"   -DLLVM_EXTERNAL_POLYGEIST_SOURCE_DIR=..   -DLLVM_TARGETS_TO_BUILD="host;X86;NVPTX"   -DLLVM_ENABLE_ASSERTIONS=ON   -DLLVM_USE_LINKER=lld   -DPOLYGEIST_USE_LINKER=lld   -DPOLYGEIST_ENABLE_CUDA=1   -DCMAKE_BUILD_TYPE=Release
-
+cmake -G Ninja ../llvm-project/llvm \
+  -DLLVM_ENABLE_PROJECTS="clang;mlir" \
+  -DCMAKE_C_COMPILER=$(which clang) \
+  -DCMAKE_CXX_COMPILER=$(which clang++) \
+  -DLLVM_EXTERNAL_PROJECTS="polygeist" \
+  -DLLVM_EXTERNAL_POLYGEIST_SOURCE_DIR=.. \
+  -DLLVM_TARGETS_TO_BUILD="host;X86;NVPTX" \
+  -DLLVM_ENABLE_ASSERTIONS=ON \
+  -DLLVM_USE_LINKER=lld \
+  -DPOLYGEIST_USE_LINKER=lld \
+  -DPOLYGEIST_ENABLE_CUDA=1 \
+  -DCMAKE_BUILD_TYPE=Release
 ```
 If there are any errors at the CMake step, then clear the build.
 Go outside the build directory and delete it.
@@ -133,12 +143,7 @@ Go outside the build directory and delete it.
 cd ..
 rm -rf build
 ```
-Install LLD
-
-```sh
-sudo apt install lld
-```
-Add this line in the CMakeLists.txt
+Add this line in the CMakeLists.txt at the root of the polygeist directory
 ```sh
 set(CLANG_TOOL "/usr/bin/clang")
 ```
@@ -155,7 +160,21 @@ To check the builds
 ```sh
 ninja check-polygeist-opt && ninja check-cgeist
 ```
-If the check tests are all successful, then Your Polygeist build is successful.
+If the check tests are all successful, then your Polygeist build is successful. If you are running on a pc with no GPU you will fail all the cuda tests.  
+
+## DO NOT SKIP
+Once you have succesfully built you will have to add the following to your environment path.  
+`path/to/computation-communication-kernel-fusion/polygeist/build/bin`  
+
+This path should be under your polygeist build folder you created and should be a valid path. It should be the full path and not a relative path. You have to add the following to ~/.bashrc at the bottom:  
+```sh
+# this should be an actual full path to the binaries installed during the polygeist build
+export PATH=/path/to/computation-communication-kernel-fusion/polygeist/build/bin${PATH:+:${PATH}}
+```
+Reload bashrc
+```sh
+source ~/.bashrc
+```
 
 
 # Our subfolders
