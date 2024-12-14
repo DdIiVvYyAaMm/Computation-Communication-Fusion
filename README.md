@@ -227,12 +227,13 @@ This test will time each solution (original, optimized, manually optimized) agai
 python test_performance.py
 ```
 #### test_l2_cache_hit_SOLUTION.sh + SOLUTION_cache_profiler.py
-These tests make use of Nvidia Nsight Compute to profile the GPU as the kernel is running. Despite the name being related to caches, these scripts will generate profile data for all pre-defined sets (defined here: https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html). The bash file is used to make the correct call to Nsight Compute to start profiling all this data. The *_cache_profiler.py is used to run kernels with different matrix sizes multiple times. This allows us to understand how the kernel is performing accross varying workloads. You will need to have Nvidia Nsight Compute installed to run these benchmarks.
+These tests make use of Nvidia Nsight Compute to profile the GPU as the kernel is running. Despite the name being related to caches, these scripts will generate profile data for all pre-defined sets (defined here: https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html). The bash file is used to make the correct call to Nsight Compute to start profiling all this data. The *_cache_profiler.py is used to run kernels with different matrix sizes multiple times. This allows us to understand how the kernel is performing accross varying workloads.
 ```sh
 # Usage
 ./test_l2_cache_hit_SOLUTION.sh
 # e.g. ./test_l2_cache_hit_original.sh
 ```
+<b>Note: Nvidia Nsight Compute (ncu) should be installed if you have properly installed CUDA from previous instructions.
 ### results (comp_comm_kernel/benchmarks/results)
 This folder contains all the results for the benchmarks described above and helper bash scripts for parsing (no output file for the correctness output). Following sections describe the output files.
 #### timing_metrics
