@@ -6,7 +6,7 @@ cd computation-communication-kernel-fusion
 # Init
 We have only tested building our solution on ubuntu 22.04.
 
-Our project depends on building the polygeist project and installing the cuda library and the appropiate driver for your GPU. We have also included our modifications to Triton, however, that is not required to build to use our solution. Prior to building either of them from source. Please make sure that your system has at least 40gb of memory between RAM and swap space. If it does not, then you can add extra swap space using the following commands:
+Our project depends on building the polygeist project and installing the cuda library and the appropiate driver for your GPU. We have also included our modifications to Triton, however, that is not required to build to use our solution. Prior to building either of them from source, please make sure that your system has at least 40gb of memory between RAM and swap space. If it does not, then you can add extra swap space using the following commands:
 
 ```sh
 sudo fallocate -l 40G /swapfile
