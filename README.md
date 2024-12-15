@@ -1,7 +1,8 @@
 # Clone
+```sh
 git clone --recursive https://github.com/Harsh-Sinha/computation-communication-kernel-fusion.git
 cd computation-communication-kernel-fusion
-
+```
 # Init
 We have only tested building our solution on ubuntu 22.04.
 
