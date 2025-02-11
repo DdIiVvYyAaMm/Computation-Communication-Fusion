@@ -1,3 +1,9 @@
+# Abstract of the Report
+AI/ML’s exponential growth requires efficient hard- ware utilization to sustain performance and control costs. General Matrix-Matrix Multiplication (GEMM), a core operation in AI computations, often becomes a bottleneck. This work optimizes GEMM via a custom LLVM-based loop tiling optimization pass, addressing challenges in compiler integration and kernel-level tun- ing.
+This paper goes through how our solution evolved from implementing an optimization pass at the MLIR level within a ML compiler to creating a Loop Tiling optimization pass at the LLVM IR level. Additionally, we highlight challenges and limitations of our evolv- ing approach. Testing on NVIDIA RTX 4060 GPUs showed significant gains in L1 cache utilization, memory throughput, and warp eligibility, outperforming base- line and manually optimized solutions across matrix sizes. Future work includes extending these techniques to sparse GEMM, masked attention, and TPU optimiza-tion.
+
+Full Report: [PDF Link](https://drive.google.com/file/d/1SqQdVl234ZFeNeB4C80AN_WB0VJdM6JO/view?usp=sharing)
+
 # Clone
 ```sh
 git clone --recursive https://github.com/Harsh-Sinha/computation-communication-kernel-fusion.git
